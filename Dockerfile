@@ -11,12 +11,14 @@ RUN yum install -y wget
 RUN wget http://yum.centreon.com/standard/3.0/stable/ces-standard.repo -O /etc/yum.repos.d/ces-standard.repo
 
 # Install Packages (SSH, sudo, Centreon Poller & Engine, SNMP)
-RUN yum install -y --nogpgcheck openssh-clients openssh-server centreon-base-config-centreon-engine centreon sudo net-snmp net-snmp-utils mysql-server
+RUN yum install -y --nogpgcheck openssh-clients openssh-server httpd centreon-base-config-centreon-engine centreon sudo net-snmp net-snmp-utils mysql-server
 
-
+# Add services script
 ADD services.sh /etc/
 RUN chmod +x /etc/services.sh
 
+# Set timezone
+RUN echo "date.timezone = Europe/Paris" > /etc/php.d/php-timezone.ini 
 
 # Change centreon user password
 RUN echo -e "password" | (passwd --stdin centreon)
