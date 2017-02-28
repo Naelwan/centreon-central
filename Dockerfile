@@ -2,7 +2,7 @@ FROM centos:6.7
 MAINTAINER naelwan <naelwan@gmail.com>
 
 # Update CentOS
-RUN yum -y update
+RUN yum -y update --nogpgcheck
 
 # Install wget
 RUN yum install -y wget epel-release
